@@ -82,7 +82,7 @@ export default function BasicForm({ permission }: { permission: IPermission }) {
         >
           Update{" "}
           <AiOutlineLoading3Quarters
-            className={cn(" animate-spin", "hidden")}
+            className={cn(" animate-spin", { hidden: !isPending })}
           />
         </Button>
       </form>

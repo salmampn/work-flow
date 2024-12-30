@@ -140,7 +140,7 @@ export default function AdvanceForm({
         >
           Update{" "}
           <AiOutlineLoading3Quarters
-            className={cn(" animate-spin", "hidden")}
+            className={cn(" animate-spin", { hidden: !isPending })}
           />
         </Button>
       </form>

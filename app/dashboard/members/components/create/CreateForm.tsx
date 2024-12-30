@@ -41,7 +41,7 @@ const FormSchema = z
     confirm: z.string().min(6, { message: "Password should be 6 characters" }),
   })
   .refine((data) => data.confirm === data.password, {
-    message: "Passowrd doesn't match",
+    message: "Password doesn't match",
     path: ["confirm"],
   });
 

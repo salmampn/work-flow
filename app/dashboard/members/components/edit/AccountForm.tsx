@@ -132,7 +132,7 @@ export default function AccountForm({
         >
           Update
           <AiOutlineLoading3Quarters
-            className={cn(" animate-spin", "hidden")}
+            className={cn(" animate-spin", { hidden: !isPending })}
           />
         </Button>
       </form>

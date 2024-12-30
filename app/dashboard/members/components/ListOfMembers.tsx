@@ -1,14 +1,18 @@
 import React from "react";
-import { TrashIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
 import EditMember from "./edit/EditMember";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/lib/store/user";
 import { readMembers } from "../actions";
 import { IPermission } from "@/lib/types";
 import DeleteMember from "./DeleteMember";
-import { TableBody } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default async function ListOfMembers() {
   const { data: permissions } = await readMembers();
@@ -17,19 +21,27 @@ export default async function ListOfMembers() {
   const isAdmin = user?.user_metadata.role === "admin";
 
   return (
-    <div className='dark:bg-inherit bg-white mx-2 rounded-sm'>
-      <TableBody>
-        {(permissions as IPermission[])?.map((permission, index) => {
-          return (
-            <div
-              className=' grid grid-cols-5 rounded-sm p-3 align-middle font-normal'
-              key={index}
-            >
-              <h1>{permission.member.name}</h1>
-              <div>
+    <div className='dark:bg-inherit bg-white mx-2 border border-gray-300 rounded-lg'>
+      <Table className='table-auto w-full'>
+        <TableHeader>
+          <TableRow>
+            <TableHead className='text-center p-4'>Name</TableHead>
+            <TableHead className='text-center p-4'>Role</TableHead>
+            <TableHead className='text-center p-4'>Created At</TableHead>
+            <TableHead className='text-center p-4'>Status</TableHead>
+            <TableHead className='text-center p-4'>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {(permissions as IPermission[])?.map((permission, index) => (
+            <TableRow key={index} className='hover:bg-gray-50'>
+              <TableCell className='text-center p-4'>
+                {permission.member.name}
+              </TableCell>
+              <TableCell className='text-center p-4'>
                 <span
                   className={cn(
-                    " dark:bg-zinc-800 px-2 py-1 rounded-full shadow capitalize  border-[.5px] text-sm",
+                    "dark:bg-zinc-800 px-2 py-1 rounded-full shadow capitalize text-sm border-[.5px]",
                     {
                       "border-green-500 text-green-600 bg-green-200":
                         permission.role === "admin",
@@ -40,12 +52,14 @@ export default async function ListOfMembers() {
                 >
                   {permission.role}
                 </span>
-              </div>
-              <h1>{new Date(permission.created_at).toDateString()}</h1>
-              <div>
+              </TableCell>
+              <TableCell className='text-center p-4'>
+                {new Date(permission.created_at).toDateString()}
+              </TableCell>
+              <TableCell className='text-center p-4'>
                 <span
                   className={cn(
-                    " dark:bg-zinc-800 px-2 py-1 rounded-full  capitalize text-sm border-zinc-300  border",
+                    "dark:bg-zinc-800 px-2 py-1 rounded-full capitalize text-sm border-zinc-300 border",
                     {
                       "text-green-600 px-4 dark:border-green-400 bg-green-200":
                         permission.status === "active",
@@ -56,21 +70,17 @@ export default async function ListOfMembers() {
                 >
                   {permission.status}
                 </span>
-              </div>
-
-              <div className='flex gap-2 items-center'>
-                {isAdmin && (
-                  <>
-                    <DeleteMember user_id={permission.member.id} />
-                  </>
-                )}
-
-                <EditMember isAdmin={isAdmin} permission={permission} />
-              </div>
-            </div>
-          );
-        })}
-      </TableBody>
+              </TableCell>
+              <TableCell className='text-center p-4'>
+                <div className='flex justify-center gap-2 items-center'>
+                  {isAdmin && <DeleteMember user_id={permission.member.id} />}
+                  <EditMember isAdmin={isAdmin} permission={permission} />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
