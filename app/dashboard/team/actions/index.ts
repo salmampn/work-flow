@@ -80,6 +80,14 @@ export async function readTeamMembersById(userId: string | undefined) {
     return await supabase.from("team_members").select("*,teams(*)").eq("member_id", userId);
 }
 
+export async function readTeamMembers() {
+    const supabase = await createSupabaseAdmin();
+    const result = supabase.from("team_members").select("*,teams(*),member(*)");
+
+    // console.log("result", result);
+    return result;
+}
+
 export async function updateTeamBasicById(id: string, data: {
     name: string;
     description?: string | undefined;

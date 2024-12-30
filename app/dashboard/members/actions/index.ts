@@ -147,3 +147,29 @@ export async function readMembers() {
 	const supabase = await createSupabaseServerClient();
 	return await supabase.from("permission").select("*,member(*)");
 }
+
+export async function readMemberById(memberId: string | undefined) {
+	if (!memberId) {
+		throw new Error("Member ID is required");
+	}
+
+	// Prevent caching of the response
+	unstable_noStore();
+
+	const supabase = await createSupabaseServerClient();
+
+	// Fetch the member details based on the member_id in the permission table
+	const { data, error } = await supabase
+		.from("permission") // Start from the permission table
+		.select("*, member(*)") // Select all fields from permission and all fields from the member table
+		.eq("member_id", memberId) // Filter where member_id matches the current user's ID
+		.single(); // Expect a single record
+
+	if (error) {
+		console.error("Error fetching member:", error);
+		throw new Error(error.message); // Handle the error appropriately
+	}
+
+	console.log("Fetched member profile:", data);
+	return data; // Return the fetched member profile data
+}

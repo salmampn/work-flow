@@ -1,25 +1,36 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PersonIcon, CrumpledPaperIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { ListCollapse } from "lucide-react";
-import { RiTeamFill } from "react-icons/ri";
+import { ListCollapse, UserPen } from "lucide-react";
+import { RiTeamLine } from "react-icons/ri";
+import { readUserSession } from "@/lib/actions";
 
 export default function NavLinks() {
+  const [isAdmin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    const fetchUserSession = async () => {
+      const { data: userSession } = await readUserSession();
+      setAdmin(userSession?.session?.user.user_metadata.role === "admin");
+    };
+    fetchUserSession();
+  }, []);
+
   const pathname = usePathname();
 
   const links = [
     {
-      href: "/dashboard/members",
-      text: "Members",
-      Icon: PersonIcon,
+      href: "/dashboard/profile",
+      text: "Profile",
+      Icon: UserPen,
     },
     {
       href: "/dashboard/team",
       text: "Teams",
-      Icon: RiTeamFill,
+      Icon: RiTeamLine,
     },
     {
       href: "/dashboard/todo",
@@ -34,6 +45,15 @@ export default function NavLinks() {
       ],
     },
   ];
+
+  if (isAdmin) {
+    links.unshift({
+      href: "/dashboard/members",
+      text: "Members",
+      Icon: PersonIcon,
+      children: [],
+    });
+  }
 
   return (
     <div className='space-y-5'>
@@ -52,7 +72,7 @@ export default function NavLinks() {
               <Icon />
               {link.text}
             </Link>
-            {pathname.startsWith("/dashboard/todo") && link.children && (
+            {/* {pathname.startsWith("/dashboard/todo") && link.children && (
               <div className='ml-4 space-y-2'>
                 {link.children.map((childLink, childIndex) => {
                   const ChildIcon = childLink.Icon;
@@ -77,7 +97,7 @@ export default function NavLinks() {
                   );
                 })}
               </div>
-            )}
+            )} */}
           </div>
         );
       })}

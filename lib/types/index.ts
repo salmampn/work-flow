@@ -60,3 +60,13 @@ export type ITask = {
         email: string;
     }
 };
+
+export type IUser = {
+    id: string;
+    created_at: string;
+    email: string;
+    name: string;
+    user_metadata: {
+        role: "user" | "admin";
+    }
+}

@@ -6,7 +6,7 @@ export default function TodoTable() {
   const tableHeader = ["Title", "Status", "Created at", "Created by"];
 
   return (
-    <Table headers={tableHeader}>
+    <Table>
       <ListOfTodo />
     </Table>
   );

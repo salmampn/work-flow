@@ -25,12 +25,12 @@ export default async function ListOfTodo() {
   }
 
   return (
-    <div className='dark:bg-inherit bg-white mx-2 rounded-sm p-4 space-y-4'>
+    <div className='space-y-4'>
       {(todos as ITask[])?.map((todos, index) => {
         return (
           <div
             key={index}
-            className='grid grid-cols-5 items-center rounded-sm p-3 shadow-sm border dark:border-zinc-700'
+            className='grid grid-cols-5 items-center rounded-xl p-3 shadow-sm border dark:border-zinc-700 bg-white dark:bg-inherit'
           >
             {/* Title */}
             <h1 className='font-medium'>{todos.title}</h1>

@@ -37,7 +37,7 @@ export default async function ListOfTeams() {
   };
 
   return (
-    <div className='dark:bg-inherit bg-white mx-2 rounded-sm'>
+    <div className='mx-2 rounded-sm'>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
         {(teams as ITeamMember[])?.map((teams, index) => (
           <Card key={teams.id} className='flex flex-col'>
