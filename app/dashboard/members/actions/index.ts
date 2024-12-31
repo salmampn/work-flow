@@ -138,7 +138,6 @@ export async function deleteMemberById(user_id: string) {
 		revalidatePath("/dashboard/members");
 		return JSON.stringify(result);
 	}
-
 }
 
 export async function readMembers() {

@@ -40,6 +40,7 @@ const FormSchema = z.object({
 
 export default function BasicForm({ todos }: { todos: ITask }) {
   const status = ["todo", "in-progress", "done"];
+
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
       title: todos.title,
@@ -112,7 +113,7 @@ export default function BasicForm({ todos }: { todos: ITask }) {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Select user status' />
+                    <SelectValue placeholder='Select todo status' />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

@@ -12,12 +12,12 @@ export type IPermission = {
     }
 }
 
-export type ITeam = {
+export type IMember = {
     id: string;
-    name: string;
-    description: string | null;
     created_at: string;
-    created_by: string;
+    role: "leader" | "member";
+    team_id: string;
+    member_id: string;
     member: {
         id: string;
         created_at: string;
@@ -53,6 +53,14 @@ export type ITask = {
     description: string | null;
     created_at: string;
     created_by: string;
+    deadline: string | null;
+    team_id: string;
+    team: {
+        id: string;
+        created_at: string;
+        name: string;
+        description: string | null;
+    }
     member: {
         id: string;
         created_at: string;
@@ -60,13 +68,3 @@ export type ITask = {
         email: string;
     }
 };
-
-export type IUser = {
-    id: string;
-    created_at: string;
-    email: string;
-    name: string;
-    user_metadata: {
-        role: "user" | "admin";
-    }
-}

@@ -8,11 +8,8 @@ import {
 } from "@/components/ui/table";
 import { readUserSession } from "@/lib/actions";
 import EditMember from "../members/components/edit/EditMember";
-import { useUserStore } from "@/lib/store/user";
-import { IPermission, IUser } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { readMemberById } from "../members/actions";
-import { readTeamMembersById } from "../team/actions";
 
 export default async function ReadUser() {
   const { data: userSession } = await readUserSession();

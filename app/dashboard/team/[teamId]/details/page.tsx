@@ -1,6 +1,6 @@
 import CreateTodo from "@/app/dashboard/todo/components/create/CreateTodo";
 import { readTeamsById } from "../../actions";
-import EditTeamForm from "./EditTeamForm";
+import EditTeamForm from "./components/EditTeamForm";
 import { readUserSession } from "@/lib/actions";
 import { CreateTeamTodo } from "./components/CreateTeamTodo";
 import { PageTabs } from "./PageTabs";
@@ -17,10 +17,11 @@ export default async function EditTeamPage({
   return (
     <div className='space-y-5 w-full overflow-y-auto px-3'>
       <div className='flex flex-col gap-2'>
+        <p className='text-muted-foreground'>Here is your team workspace </p>
         <h1 className='text-4xl font-bold uppercase'>{team.name}</h1>
-        <p className='text-muted-foreground'>Here's your team workspace</p>
+        <p className='opacity-80'>{team.description}</p>
       </div>
-      <PageTabs />
+      <PageTabs team={team} />
       {isAdmin && (
         <div className='flex gap-2 justify-end'>
           {/* <SearchTodo /> */}

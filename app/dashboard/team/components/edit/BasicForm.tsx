@@ -18,7 +18,7 @@ import { toast } from "@/hooks/use-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { cn } from "@/lib/utils";
 import { useTransition } from "react";
-import { ITeamMember, ITeam } from "@/lib/types";
+import { ITeamMember } from "@/lib/types";
 import { updateTeamBasicById } from "../../actions";
 import { Textarea } from "@/components/ui/textarea";
 

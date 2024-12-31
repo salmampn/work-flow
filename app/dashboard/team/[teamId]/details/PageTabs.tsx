@@ -1,28 +1,28 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import TeamMembers from "./TeamMembers";
+import { ITeamMember } from "@/lib/types";
+import TeamTodos from "./TeamTodos";
 
-export function PageTabs() {
+export function PageTabs({ team }: { team: ITeamMember }) {
   return (
     <Tabs defaultValue='team' className='w-full space-y-5'>
-      <TabsList className={cn("grid w-full grid-cols-2")}>
+      <TabsList
+        className={cn("grid w-full grid-cols-2 border border-gray-300")}
+      >
         <TabsTrigger value='team'>Team Members</TabsTrigger>
         <TabsTrigger value='todo'>Todos</TabsTrigger>
       </TabsList>
-      <TabsContent value='team'></TabsContent>
-      <TeamMembers />
-      <TabsContent value='assign'></TabsContent>
+
+      {/* Team Members Tab Content */}
+      <TabsContent value='team'>
+        <TeamMembers team={team} />
+      </TabsContent>
+
+      {/* Team Todos Tab Content */}
+      <TabsContent value='todo'>
+        <TeamTodos />
+      </TabsContent>
     </Tabs>
   );
 }

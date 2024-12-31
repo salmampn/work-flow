@@ -65,18 +65,34 @@ export default function AssignForm({ teams }: { teams: ITeamMember }) {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     startTransition(async () => {
-      const { error } = JSON.parse(await AssignTeamMember(data));
-      if (error?.message) {
-        console.log(error?.message);
-        toast({
-          title: "Fail to update",
-          description: (
-            <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-              <code className='text-white'>{error?.message}</code>
-            </pre>
-          ),
-        });
-        console.error(error.message);
+      const result = JSON.parse(await AssignTeamMember(data));
+
+      // Check if the result contains an error message
+      if (!result.success) {
+        const errorMessage = result.error;
+
+        console.log(errorMessage);
+
+        if (errorMessage === "This member is already assigned to this team.") {
+          toast({
+            title: "Assignment Failed",
+            description: (
+              <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+                <code className='text-white'>{errorMessage}</code>
+              </pre>
+            ),
+          });
+        } else {
+          toast({
+            title: "Fail to update",
+            description: (
+              <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+                <code className='text-white'>{errorMessage}</code>
+              </pre>
+            ),
+          });
+        }
+        console.error(errorMessage);
       } else {
         toast({
           title: "Successfully updated",

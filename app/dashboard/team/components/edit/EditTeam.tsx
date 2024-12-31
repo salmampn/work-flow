@@ -3,7 +3,7 @@ import DailogForm from "../DialogForm";
 import { Button } from "@/components/ui/button";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import EditForm from "./EditorForm";
-import { ITeamMember, ITeam } from "@/lib/types";
+import { ITeamMember } from "@/lib/types";
 
 export default function EditTeam({
   isAdmin,

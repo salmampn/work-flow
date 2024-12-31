@@ -3,21 +3,47 @@ import { readUserSession } from "@/lib/actions";
 import { createSupabaseAdmin, createSupabaseServerClient } from "@/lib/supabase";
 import { revalidatePath, unstable_noStore } from "next/cache";
 
+// export async function createTodo(data: {
+// 	title: string;
+// 	status: "todo" | "in-progress" | "done";
+// 	description?: string | undefined;
+// 	deadline?: string | undefined;
+// }) {
+
+// 	const { data: userSession } = await readUserSession();
+// 	const userId = userSession.session?.user.id;
+
+// 	const supabase = await createSupabaseServerClient();
+
+// 	// create a new todo
+// 	const createResult = await supabase.from("tasks").insert({
+// 		...data, created_by: userId
+// 	});
+// 	revalidatePath("/dashboard/todo");
+// 	return JSON.stringify(createResult);
+// }
+
 export async function createTodo(data: {
 	title: string;
 	status: "todo" | "in-progress" | "done";
 	description?: string | undefined;
+	deadline?: string | undefined; // Pass ISO format deadline string
 }) {
-
 	const { data: userSession } = await readUserSession();
 	const userId = userSession.session?.user.id;
 
 	const supabase = await createSupabaseServerClient();
 
-	// create a new todo
-	const createResult = await supabase.from("tasks").insert({
-		...data, created_by: userId
-	});
+	// Ensure deadline is in ISO format
+	const payload = {
+		...data,
+		deadline: data.deadline ? new Date(data.deadline).toISOString() : null, // Format deadline as ISO string
+		created_by: userId,
+	};
+
+	// Create a new todo
+	const createResult = await supabase.from("tasks").insert(payload);
+
 	revalidatePath("/dashboard/todo");
 	return JSON.stringify(createResult);
 }

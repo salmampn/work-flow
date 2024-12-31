@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BasicForm from "./BasicForm";
 import { cn } from "@/lib/utils";
-import { ITeamMember, ITeam } from "@/lib/types";
+import { ITeamMember } from "@/lib/types";
 import AssignForm from "./AssignForm";
 
 export default function EditForm({
